@@ -9,19 +9,22 @@ import // addCollectionAndDocuments,
 // auth,
 // createUserProfileDocument,
 "./firebase/firebase.utils";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkUserSession } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selector";
-import { createStructuredSelector } from "reselect";
+// import { createStructuredSelector } from "reselect";
 import CheckoutPage from "./pages/checkout/checkout.component";
-import { selectCollectionsForPreview } from "./redux/shop/shop.selector";
+// import { selectCollectionsForPreview } from "./redux/shop/shop.selector";
 
-const App = ({ currentUser, checkUserSession }) => {
+const App = () => {
   // unsubscribeFromAuth;
 
+  const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    checkUserSession();
-  }, [checkUserSession]);
+    dispatch(checkUserSession());
+  }, [dispatch]);
 
   // componentDidMount() {
   // const { checkUserSession } = this.props;
@@ -72,15 +75,15 @@ const App = ({ currentUser, checkUserSession }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  collectionsArray: selectCollectionsForPreview,
-});
+// const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser,
+//   collectionsArray: selectCollectionsForPreview,
+// });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    checkUserSession: () => dispatch(checkUserSession()),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     checkUserSession: () => dispatch(checkUserSession()),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
